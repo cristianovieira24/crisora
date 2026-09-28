@@ -1,52 +1,52 @@
 # Crisora
 
-Site institucional e portfólio da Crisora: identidade visual, websites e comunicação digital.
+Site, portfólio e painel de gestão da Crisora. Adaptado para **Next.js na Vercel + Supabase**.
 
-## Estado desta versão
+## Estado
 
-Código completo da versão publicada, incluindo imagens, fontes locais, animações, painel de conteúdo, categorias e seleção de até seis projetos em destaque por categoria.
+- Código preparado para Vercel; build de produção e testes locais concluídos.
+- Imagens, fontes, animações, projetos e limite de seis destaques por categoria preservados.
+- Publicação na Vercel e teste real do painel dependem da configuração do Supabase e das variáveis abaixo.
+- Sem essas variáveis, as páginas públicas exibem o conteúdo inicial; o painel fica indisponível, sem aceitar alterações.
+- O site anterior continua em https://crisora-design.creastezgin123.chatgpt.site/ até a nova publicação ser validada.
 
-O repositório guarda o código-fonte. **Esta versão ainda não é uma implantação compatível com Vercel ou GitHub Pages.** O site atual continua disponível em https://crisora-design.creastezgin123.chatgpt.site/.
+## Publicar
 
-## Tecnologia
+Siga [o guia de publicação](docs/PUBLICACAO.md).
 
-React, TypeScript, Vinext/Vite, Tailwind CSS, GSAP/ScrollTrigger, Lenis e Framer Motion. Fundo interativo em WebGL com imagem alternativa.
+1. Crie um projeto Supabase e execute `supabase/001_initial.sql` no SQL Editor.
+2. Crie o utilizador administrador no Supabase Auth, com email confirmado. Desative o cadastro público.
+3. Importe `cristianovieira24/crisora` na Vercel com o preset **Next.js**, raiz do repositório, Node.js 22 ou superior.
+4. Configure as quatro variáveis de `.env.example` na Vercel e publique.
+5. Abra `/admin/login` e teste login, uploads, edição e rascunhos.
 
-## Dependências da hospedagem atual
-
-- Banco Cloudflare D1 (`DB`): projetos, categorias e conteúdo editável.
-- Armazenamento Cloudflare R2 (`BUCKET`): uploads de imagens.
-- Autenticação do painel fornecida pela hospedagem Sites/ChatGPT.
-- O arquivo `.openai/hosting.json` identifica o projeto de origem; não contém credenciais.
-
-**Não publique esta versão diretamente em outro provedor confiando nos cabeçalhos `oai-authenticated-*`.** Fora da hospedagem original, a autenticação precisa ser substituída por sessões verificadas no servidor antes de habilitar a edição.
+Nunca publique valores reais de `.env.local` nem a chave secreta do Supabase no GitHub.
 
 ## Desenvolvimento
 
-Node.js >=22.13 e pnpm (versão em `package.json`).
-
 ```sh
-pnpm install --frozen-lockfile
-pnpm dev
+npm ci
+# Copie .env.example para .env.local e preencha os valores do seu projeto.
+npm run dev
+npm test
+npm run typecheck
+npm run build
 ```
 
-O ambiente local utiliza bindings simulados de D1/R2. O painel precisa de configuração de autenticação para o proprietário; a identidade de teste local não é a conta administradora de produção. Migrações do banco estão em `drizzle/`.
+## Arquitetura
 
-## Próxima etapa: Vercel
+- React, Next.js App Router e TypeScript.
+- Tailwind, GSAP/ScrollTrigger, Lenis, Framer Motion e WebGL.
+- Supabase Postgres: projetos e configurações.
+- Supabase Auth: sessão em cookies e validação no servidor; apenas o email definido em `ADMIN_EMAIL` edita.
+- Supabase Storage: imagens privadas, apresentadas através de links temporários em `/media/:id`.
+- Upload direto autorizado pelo servidor, até 8 MB; os bytes não passam pelas funções da Vercel.
+- Tabelas com RLS e sem permissões para `anon`/`authenticated`; acesso aos dados através do servidor.
 
-1. Adaptar a execução para Next.js na Vercel.
-2. Substituir os bindings D1/R2 por banco e armazenamento configurados para essa hospedagem.
-3. Implementar login próprio e autorização de administrador no servidor.
-4. Migrar o conteúdo e os uploads existentes, preservando os endereços das imagens.
-5. Configurar variáveis privadas, testar edição/upload e publicar.
+As imagens estáticas estão em `public/`. O banco e os uploads do painel não pertencem ao Git e persistem no Supabase entre deploys.
 
-O frontend e a identidade visual podem ser preservados nessa migração. Não há senhas, tokens, banco de produção ou uploads privados neste repositório. Os arquivos de `public/` são os assets do site.
+## Verificações
 
-## Conteúdo
+`npm test` verifica autorização, email confirmado, origem das alterações, validação de upload, rascunhos e seis destaques por categoria, com serviços simulados. Não substitui o teste final na conta Supabase configurada.
 
-- `app/`: páginas, componentes visuais, painel e rotas de API.
-- `lib/`: modelos e conteúdo inicial.
-- `public/`: imagens, fontes e prévias.
-- `db/` e `drizzle/`: esquema e migrações.
-
-As demonstrações de portfólio são identificadas como tal no conteúdo do site.
+O código de origem da hospedagem anterior permanece no histórico, no commit `ce69e5a3819c2216fa9c52d8951efec4e07038ca`.
