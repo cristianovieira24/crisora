@@ -1,0 +1,2 @@
+import {bucket} from '@/lib/projects';
+export async function GET(_req:Request,{params}:{params:Promise<{key:string}>}){try{const {key}=await params;if(!/^[\w-]+$/.test(key))return new Response('Não encontrado',{status:404});const f=await bucket().get(key);if(!f)return new Response('Não encontrado',{status:404});return new Response(f.body,{headers:{'Content-Type':f.httpMetadata?.contentType||'application/octet-stream','Cache-Control':'public,max-age=86400','X-Content-Type-Options':'nosniff'}})}catch{return new Response('Indisponível',{status:503})}}
