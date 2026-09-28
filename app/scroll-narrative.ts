@@ -6,7 +6,7 @@ export function setupNarrative(site:HTMLElement,media:gsap.MatchMedia,lenis:Leni
 media.add('(min-width: 700px) and (min-height: 620px) and (prefers-reduced-motion: no-preference)',()=>{
 const opening=site.querySelector<HTMLElement>('.reveal-opening');if(!opening)return;opening.classList.add('opening-directed');
 const tl=gsap.timeline({scrollTrigger:{trigger:opening,start:'top top',end:()=>'+='+innerHeight*1.05,pin:true,scrub:.8,anticipatePin:1,invalidateOnRefresh:true},defaults:{ease:'power2.inOut'}});
-tl.fromTo(opening.querySelector('.living-surface'),{clipPath:'circle(38% at 50% 50%)',scale:1.18},{clipPath:'circle(85% at 50% 50%)',scale:1,duration:1},0)
+tl.fromTo(opening.querySelector('.living-surface'),{clipPath:'circle(0% at 50% 50%)',scale:1.18},{clipPath:'circle(85% at 50% 50%)',scale:1,duration:1},0)
 .to(opening.querySelector('.opening-mark'),{scale:.6,autoAlpha:0,duration:.25},.05)
 .fromTo(opening.querySelectorAll('h1 i'),{yPercent:120},{yPercent:0,duration:.45,stagger:.09},.28)
 .fromTo(opening.querySelector('.opening-label'),{autoAlpha:0,y:15},{autoAlpha:1,y:0,duration:.25},.3)
