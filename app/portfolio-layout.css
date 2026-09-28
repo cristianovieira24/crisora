@@ -72,8 +72,8 @@ html{scroll-padding-top:108px}.site-header{position:fixed;z-index:40;top:18px;le
 .texture-continuity:after{content:none}
 .texture-motion{position:absolute;inset:-3%;transform:scale(1.08);will-change:transform;background:#04102c url('/assets/immersive-flow.1ebc43f150.webp') center/cover no-repeat}
 .texture-shade{position:absolute;inset:0;z-index:2;background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),linear-gradient(90deg,rgba(1,5,17,.46) 0%,rgba(1,5,17,.68) 25%,rgba(1,5,17,.72) 50%,rgba(1,5,17,.68) 75%,rgba(1,5,17,.46) 100%);pointer-events:none}
-/* Keep the website example and its caption within the pinned chapter on short desktops. */
-@media(min-width:1000px) and (max-height:900px){.is-directed .website-system{width:min(100%,calc(48svh * 1.6));margin-left:auto}.is-directed .website-delivery{margin-top:12px;padding-top:12px}.is-directed .website-system .chapter-example{margin-top:14px}}
+/* Size the website mockup from the available viewport height so its captions clear the chapter navigation. */
+@media(min-width:1000px){.is-directed .website-system{width:min(100%,680px,calc(48svh * 1.6));margin-left:auto}.is-directed .website-delivery{margin-top:12px;padding-top:12px}.is-directed .website-system .chapter-example{margin-top:14px}}
 @media(prefers-reduced-motion:reduce){.texture-motion{transform:none;will-change:auto}}
 .creative-site>main,.creative-site>.compact-footer{position:relative;z-index:1}
 /* Owner content editor */
